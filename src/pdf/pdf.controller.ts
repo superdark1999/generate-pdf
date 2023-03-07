@@ -14,10 +14,11 @@ export class PdfController {
       .fill(0)
       .map((p) => ['Val 1', 'Val 2', 'Val 3', 'Val 4']);
 
-    await this.pdfService.createPdf(data, () => {
+    const buffer = await this.pdfService.createPdf(data, (buffer) => {
       console.log('response here');
+      console.log(buffer);
     });
-    // fs.writeFileSync('test.pdf', buffer);
+
     // res.set({
     //   'Content-Type': 'application/pdf',
     //   'Content-Disposition': 'attachment; filename=example.pdf',
