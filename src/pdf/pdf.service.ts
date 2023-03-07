@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import * as pdfmake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { v4 as uuidv4 } from 'uuid';
 
 import * as fs from 'fs';
 import * as PdfPrinter from 'pdfmake';
 
 @Injectable()
 export class PdfService {
-  createPdf(data: any): Promise<Buffer> {
+  createPdf(data: any, callback: any): Promise<Buffer> {
     // Define font files
     const fonts = {
       Roboto: {
@@ -22,6 +21,22 @@ export class PdfService {
 
     const dd = {
       content: [
+        // {
+        //   stack: [
+        //     {
+        //       image: 'logo.png',
+        //       width: 150,
+        //     },
+        //     {
+        //       text: 'Reefer IoT Sensor Report',
+        //       style: 'header',
+        //     },
+        //   ],
+        // },
+        {
+          text: 'Download Date: Mar 07, 2023 4:41 UTC',
+          style: 'date',
+        },
         {
           layout: 'lightHorizontalLines', // optional
           table: {
@@ -31,23 +46,31 @@ export class PdfService {
             widths: ['*', '*', '*', '*'],
 
             body: [
-              ['First', 'Second', 'Third', 'The last one'],
-              ['Value 1', 'Value 2', 'Value 3', 'Value 4'],
               [
-                { text: 'Bold value', bold: true, fillColor: '#Ee2cf9' },
-                'Val 2',
-                'Val 3',
-                'Val 4',
+                { text: 'first', bold: true, fillColor: '#F6E2EA' },
+                { text: 'second', bold: true, fillColor: '#F6E2EA' },
+                { text: 'third', bold: true, fillColor: '#F6E2EA' },
+                { text: 'last column', bold: true, fillColor: '#F6E2EA' },
               ],
             ],
           },
         },
       ],
+      styles: {
+        header: {
+          fontSize: 30,
+          bold: true,
+        },
+        date: {
+          alignment: 'right',
+        },
+      },
     };
 
-    const pdfDoc = printer.createPdfKitDocument(dd, {});
-    pdfDoc.pipe(fs.createWriteStream('document.pdf'));
-    pdfDoc.end();
+    const doc = printer.createPdfKitDocument(dd, {});
+
+    doc.pipe(fs.createWriteStream(`pdf/document-${uuidv4()}.pdf`));
+    doc.end();
     return null;
   }
 }

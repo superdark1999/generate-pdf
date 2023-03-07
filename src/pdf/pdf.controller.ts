@@ -10,15 +10,13 @@ export class PdfController {
 
   @Get()
   async generatePdf(@Res() res: Response): Promise<void> {
-    const data = [
-      ['Name', 'Age', 'Gender'],
-      ['John Doe', '30', 'Male'],
-      ['Jane Doe', '25', 'Female'],
-      ['Jim Doe', '35', 'Male'],
-    ];
+    const data = Array(4)
+      .fill(0)
+      .map((p) => ['Val 1', 'Val 2', 'Val 3', 'Val 4']);
 
-    const buffer = await this.pdfService.createPdf(data);
-
+    await this.pdfService.createPdf(data, () => {
+      console.log('response here');
+    });
     // fs.writeFileSync('test.pdf', buffer);
     // res.set({
     //   'Content-Type': 'application/pdf',
@@ -26,5 +24,6 @@ export class PdfController {
     //   'Content-Length': buffer.length,
     // });
     // res.send(buffer);
+    res.send({ name: 'long' });
   }
 }
