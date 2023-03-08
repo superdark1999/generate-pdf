@@ -4,6 +4,6 @@ import { PdfPuppeteerController } from './pdf-puppeteer.controller';
 
 @Module({
   controllers: [PdfPuppeteerController],
-  providers: [PdfPuppeteerService]
+  providers: [PdfPuppeteerService],
 })
 export class PdfPuppeteerModule {}

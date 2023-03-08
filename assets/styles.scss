@@ -1,0 +1,56 @@
+.logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 20px;
+  font-weight: bold;
+  // height: 20px;
+}
+
+.title {
+  color: red;
+  display: flex;
+  justify-content: center;
+}
+
+.date {
+  display: flex;
+  justify-content: end;
+  margin: 10px;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 10rem auto;
+}
+
+table,
+td,
+th {
+  border: 1px solid;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+tr {
+  width: 100%;
+}
+
+td:nth-child(1),
+th:nth-child(1) {
+  width: 20px;
+}
+
+th {
+  background-color: #a67b8c;
+}
+
+th,
+td {
+  text-align: center;
+  vertical-align: middle;
+}

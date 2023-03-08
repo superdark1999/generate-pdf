@@ -1,0 +1,35 @@
+<html>
+
+  <body>
+    <img src='/public/images/logo.png' alt='logo' class='logo' />
+    <h1 class='title'>{{title}}</h1>
+    <div class='date'>
+      Download Date:
+      {{date}}
+    </div>
+
+    <div class='info'>
+      {{#each info as |value|}}
+        <div> {{value.label}}</div>
+        <div> {{value.value}}</div>
+      {{/each}}
+    </div>
+    <table>
+
+      <tr>
+        {{#each nameOfColumn as |value|}}
+          <th> {{value}}</th>
+        {{/each}}
+      </tr>
+
+      {{#each data as |row|}}
+        <tr>
+          {{#each row as |cell|}}
+            <td>{{cell}}</td>
+          {{/each}}
+        </tr>
+      {{/each}}
+
+    </table>
+  </body>
+</html>
