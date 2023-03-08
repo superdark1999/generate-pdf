@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import puppeteer from 'puppeteer';
 import Handlebars from 'handlebars';
 import * as fs from 'fs';
+import { dummyData, formatDataForPdfGeneration } from './utils';
 
 @Injectable()
 export class PdfPuppeteerService {
@@ -17,43 +18,12 @@ export class PdfPuppeteerService {
     );
 
     // Generate HTML from template and data
-    const data = {
-      title: 'Reefer IoT Sensor Report ',
-      date: 'Mar 07, 2023 4:41 UTC',
-      info: [
-        {
-          label: 'Container',
-          value: 'CAIU5674764',
-        },
-        {
-          label: 'Bill of Lading : ',
-          value: 'LEHC44353900',
-        },
-        {
-          label: 'Commodity:',
-          value: '',
-        },
-        {
-          label: 'Period:',
-          value: 'Dec 14, 2022 3:21 UTC to Jan 04, 2023 5:09 UTC',
-        },
-      ],
-      nameOfColumn: [
-        'Time',
-        'Supply Air\n(C°)',
-        'return air\n(C°)',
-        'ambient temp\n(C°)',
-        'ambient temp\n(C°)',
-        'ambient temp\n(C°)',
-      ],
-      data: [
-        ...Array(100)
-          .fill(0)
-          .map((_) => {
-            return [new Date().toLocaleDateString(), 1.5, 1.5, 2.5, null, null];
-          }),
-      ],
-    };
+    const data = formatDataForPdfGeneration(
+      'CAIU5674764',
+      'LEHC44353900',
+      'Dec 14, 2022 3:21 UTC to Jan 04, 2023 5:09 UTC',
+      dummyData,
+    );
 
     const html = template(data);
 
@@ -61,17 +31,28 @@ export class PdfPuppeteerService {
       waitUntil: 'domcontentloaded',
     });
 
+    // add page number in footer
+    const footerTemplate = `
+      <div style="border-top: solid 1px #bbb; width: 100%; font-size: 9px;
+       padding: 5px 5px 0; color: #bbb; position: relative;">
+      <div style="position: absolute; right: 5px; top: 5px;"><span class="pageNumber"></span>/<span class="totalPages"></span></div>
+      </div>`;
+
     const pdf = await page.pdf({
       format: 'A4',
       printBackground: true,
+      displayHeaderFooter: true,
+      footerTemplate: footerTemplate,
       margin: {
         top: 10,
-        bottom: 10,
+        bottom: 30,
         left: 10,
         right: 10,
       },
     });
+
     await browser.close();
+
     return pdf;
   }
 }

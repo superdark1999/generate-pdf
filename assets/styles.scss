@@ -40,12 +40,11 @@ tr {
   width: 100%;
 }
 
-thead {
-}
-
 td:nth-child(1),
 th:nth-child(1) {
-  width: 20px;
+  width: max-content;
+  padding: 0 5px;
+  white-space: nowrap;
 }
 
 th {
