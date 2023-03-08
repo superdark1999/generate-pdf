@@ -43,12 +43,14 @@ export class PdfPuppeteerService {
         'Supply Air\n(C°)',
         'return air\n(C°)',
         'ambient temp\n(C°)',
+        'ambient temp\n(C°)',
+        'ambient temp\n(C°)',
       ],
       data: [
         ...Array(100)
           .fill(0)
           .map((_) => {
-            return [new Date().toLocaleDateString(), 1.5, 1.5, 2.5];
+            return [new Date().toLocaleDateString(), 1.5, 1.5, 2.5, null, null];
           }),
       ],
     };

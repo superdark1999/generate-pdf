@@ -15,12 +15,13 @@
       {{/each}}
     </div>
     <table>
-
-      <tr>
-        {{#each nameOfColumn as |value|}}
-          <th> {{value}}</th>
-        {{/each}}
-      </tr>
+      <thead>
+        <tr>
+          {{#each nameOfColumn as |value|}}
+            <th> {{value}}</th>
+          {{/each}}
+        </tr>
+      </thead>
 
       {{#each data as |row|}}
         <tr>
