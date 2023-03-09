@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import puppeteer from 'puppeteer';
 import Handlebars from 'handlebars';
 import * as fs from 'fs';
-import { dummyData, formatDataForPdfGeneration } from './utils';
+import { dummyData, formatDataForPdfGeneration, GENERATE_TYPE } from './utils';
 
 @Injectable()
 export class PdfPuppeteerService {
@@ -10,15 +10,12 @@ export class PdfPuppeteerService {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    // read css file
-    const css = fs.readFileSync('assets/styles.scss', 'utf-8');
-
     const template = Handlebars.compile(
       fs.readFileSync('assets/template.hbs', 'utf8'),
     );
 
-    // Generate HTML from template and data
     const data = formatDataForPdfGeneration(
+      GENERATE_TYPE.TEMP_HUMIDITY,
       'CAIU5674764',
       'LEHC44353900',
       'Dec 14, 2022 3:21 UTC to Jan 04, 2023 5:09 UTC',
@@ -26,6 +23,7 @@ export class PdfPuppeteerService {
     );
 
     const html = template(data);
+    const css = fs.readFileSync('assets/styles.scss', 'utf-8');
 
     await page.setViewport({
       width: 297 * 2,
@@ -36,7 +34,7 @@ export class PdfPuppeteerService {
 
     await page.setContent(`<style>${css}</style>${html}`);
 
-    // // add page number in footer
+    // add page number in footer
     const footerTemplate = `
       <div style="border-top: solid 1px #bbb; width: 100%; font-size: 9px;
        padding: 5px 5px 0; color: #bbb; position: relative;">
