@@ -7,7 +7,7 @@ import { dummyData, formatDataForPdfGeneration } from './utils';
 @Injectable()
 export class PdfPuppeteerService {
   async generatePdf(): Promise<Buffer> {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
 
     // read css file
@@ -27,6 +27,13 @@ export class PdfPuppeteerService {
 
     const html = template(data);
 
+    await page.setViewport({
+      width: 297 * 2,
+      height: 210 * 2,
+      deviceScaleFactor: 2,
+      isLandscape: true,
+    });
+
     await page.setContent(`<style>${css}</style>${html}`, {
       waitUntil: 'domcontentloaded',
     });
@@ -40,19 +47,21 @@ export class PdfPuppeteerService {
 
     const pdf = await page.pdf({
       format: 'A4',
-      printBackground: true,
-      displayHeaderFooter: true,
-      footerTemplate: footerTemplate,
-      margin: {
-        top: 10,
-        bottom: 30,
-        left: 10,
-        right: 10,
-      },
+      // printBackground: true,
+      // landscape: true,
+      // displayHeaderFooter: true,
+      // footerTemplate: footerTemplate,
+      // margin: {
+      //   top: 10,
+      //   bottom: 30,
+      //   left: 10,
+      //   right: 10,
+      // },
     });
 
-    await browser.close();
+    // await browser.close();
 
-    return pdf;
+    // return pdf;
+    return null;
   }
 }

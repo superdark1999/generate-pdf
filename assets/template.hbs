@@ -3,25 +3,27 @@
     <meta charset='utf-8' />
   </head>
   <body>
-    <img src='logo.png' alt='logo' class='logo' />
+    <img
+      src='https://www.pngfind.com/pngs/m/221-2217846_is-a-major-new-global-container-shipping-company.png'
+      alt='logo'
+      class='logo'
+      style='width: 100px'
+    />
 
     <h1 class='title'>Reefer IoT Sensor Report</h1>
-    <div class='date'>
-      Download Date:
-      {{date}}
-    </div>
+    <div class='date'>Download Date: {{date}}</div>
 
     <div class='info'>
       {{#each info as |value|}}
-        <div> {{value.label}}</div>
-        <div> {{value.value}}</div>
+        <div>{{value.label}}</div>
+        <div>{{value.value}}</div>
       {{/each}}
     </div>
     <table>
       <thead>
         <tr>
           {{#each nameOfColumn as |value|}}
-            <th> {{value}}</th>
+            <th>{{value}}</th>
           {{/each}}
         </tr>
       </thead>
@@ -33,7 +35,6 @@
           {{/each}}
         </tr>
       {{/each}}
-
     </table>
   </body>
 </html>
