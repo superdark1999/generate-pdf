@@ -1,7 +1,21 @@
 const dummyData = Array(100)
   .fill(0)
   .map((_) => {
-    return [formatDate(new Date(), true), 1.5, 1.5, 2.5, null, null];
+    return [
+      formatDate(new Date(), true),
+      1.5,
+      1.5,
+      2.5,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+    ];
   });
 
 function formatDate(date: Date, utc: boolean): string {
@@ -60,11 +74,18 @@ function formatDataForPdfGeneration(
     ],
     nameOfColumn: [
       'Time',
+      'Temp Setpoint \n(C°)',
       'Supply Air\n(C°)',
       'return air\n(C°)',
-      'ambient temp\n(C°)',
-      'ambient temp\n(C°)',
-      'ambient temp\n(C°)',
+      'USDA1\n(C°)',
+      'USDA2\n(C°)',
+      'USDA3\n(C°)',
+      'Ambient Temp\n(C°)',
+      'Humidity Setpoint\n(%)',
+      'Humidity\n(%)',
+      'O2 Setpoint\n(%)',
+      'CO2 Setpoint\n(%)',
+      'CO2\n(%)',
     ],
     data: containerData,
   };

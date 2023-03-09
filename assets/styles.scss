@@ -34,6 +34,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
+  table-layout: fixed;
 }
 
 tr {
@@ -43,7 +44,7 @@ tr {
 td:nth-child(1),
 th:nth-child(1) {
   width: max-content;
-  padding: 0 5px;
+  padding: 2px 5px;
   white-space: nowrap;
 }
 
@@ -51,6 +52,9 @@ th {
   background-color: #a67b8c;
 }
 
+.wide {
+  width: 200px;
+}
 th,
 td {
   text-align: center;
