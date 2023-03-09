@@ -46,7 +46,7 @@ function formatDataForPdfGeneration(
         value: containerId,
       },
       {
-        label: 'Bill of Lading : ',
+        label: 'Bill of Lading :',
         value: billId,
       },
       {
