@@ -1,3 +1,40 @@
+import _ from 'lodash';
+
+const inputData = [
+  {
+    date: '2022-12-14T03:21:29.000Z',
+    temperatureSetpoint: '',
+    supplyAirTemperature: 274.65,
+    returnAirTemperature: 274.52,
+    usda1Temperature: '',
+    usda2Temperature: '',
+    usda3Temperature: '',
+    ambientTemperature: 275.65,
+    humiditySetpoint: '',
+    humidity: '',
+    o2Setpoint: '',
+    o2: '',
+    co2Setpoint: '',
+    co2: '',
+  },
+  {
+    date: '2022-12-14T03:31:36.000Z',
+    temperatureSetpoint: '',
+    supplyAirTemperature: 273.15,
+    returnAirTemperature: 273.96,
+    usda1Temperature: '',
+    usda2Temperature: '',
+    usda3Temperature: '',
+    ambientTemperature: 276.15,
+    humiditySetpoint: '',
+    humidity: '',
+    o2Setpoint: '',
+    o2: '',
+    co2Setpoint: '',
+    co2: '',
+  },
+];
+
 const dummyData = Array(100)
   .fill(0)
   .map((_) => {
@@ -62,17 +99,29 @@ const GROUP_COLUMN = {
       'Return Air\n(C°)',
       'Ambient Temp\n(C°)',
     ],
-    value: '',
+    mappedFieldName: [
+      'temperatureSetpoint',
+      'supplyAirTemperature',
+      'returnAirTemperature',
+      'ambientTemperature',
+    ],
   },
   HUMIDITY: {
     columnName: ['Humidity Setpoint\n(%)', 'Humidity\n(%)'],
-    value: '',
+    mappedFieldName: ['humiditySetpoint', 'humidity'],
   },
   CA: {
     columnName: ['O2 Setpoint\n(%)', 'O2N(%)', 'CO2 Setpoint\n(%)', 'CO2\n(%)'],
-    value: '',
+    mappedFieldName: ['o2Setpoint', 'o2', 'co2Setpoint', 'co2'],
   },
-  CT: { columnName: ['USDA1\n(C°)', 'USDA2\n(C°)', 'USDA3\n(C°)'], value: '' },
+  CT: {
+    columnName: ['USDA1\n(C°)', 'USDA2\n(C°)', 'USDA3\n(C°)'],
+    mappedFieldName: [
+      'usda1Temperature',
+      'usda2Temperature',
+      'usda3Temperature',
+    ],
+  },
 };
 
 const GENERATE_TYPE_MAPPED_COLUMN = {
@@ -86,18 +135,6 @@ const GENERATE_TYPE_MAPPED_COLUMN = {
     GROUP_COLUMN.CT,
   ],
 };
-
-console.log(GENERATE_TYPE_MAPPED_COLUMN[GENERATE_TYPE.TEMP_HUMIDITY]);
-
-const temp = GENERATE_TYPE_MAPPED_COLUMN[GENERATE_TYPE.TEMP_HUMIDITY].reduce(
-  (accum, curr) => {
-    accum.push(...curr.columnName);
-    return accum;
-  },
-  [],
-);
-
-console.log('temp', temp);
 
 function formatDataForPdfGeneration(
   generateType: GENERATE_TYPE,
@@ -126,13 +163,13 @@ function formatDataForPdfGeneration(
         value: Period,
       },
     ],
-    nameOfColumn: GENERATE_TYPE_MAPPED_COLUMN[generateType].reduce(
-      (accum, curr) => {
+    nameOfColumn: [
+      'Time',
+      ...GENERATE_TYPE_MAPPED_COLUMN[generateType].reduce((accum, curr) => {
         accum.push(...curr.columnName);
         return accum;
-      },
-      [],
-    ),
+      }, []),
+    ],
     data: containerData,
   };
 
