@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import puppeteer from 'puppeteer';
 import Handlebars from 'handlebars';
 import * as fs from 'fs';
-import { dummyData, formatDataForPdfGeneration, GENERATE_TYPE } from './utils';
+import { formatDataForPdfGeneration, GENERATE_TYPE } from './utils';
+import dummy from './dummy';
 
 @Injectable()
 export class PdfPuppeteerService {
@@ -15,11 +16,11 @@ export class PdfPuppeteerService {
     );
 
     const data = formatDataForPdfGeneration(
-      GENERATE_TYPE.TEMP_HUMIDITY,
+      GENERATE_TYPE.PDF_CA_CT,
       'CAIU5674764',
       'LEHC44353900',
       'Dec 14, 2022 3:21 UTC to Jan 04, 2023 5:09 UTC',
-      dummyData,
+      dummy,
     );
 
     const html = template(data);
